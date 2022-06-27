@@ -6,11 +6,11 @@
 #@toolbar 
 
 import ghidra_bridge
-
-from findcrypt3 import *
+import importlib.util 
 
 with ghidra_bridge.GhidraBridge(namespace=globals()) as b:
-    a = PLUGIN_ENTRY()
-    a.search()
+    plugin = input("Plugin Name: ")
+    module = importlib.import_module(plugin)
+    module.PLUGIN_ENTRY().run(0)
     b.remote_shutdown()
 
