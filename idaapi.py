@@ -73,6 +73,7 @@ def set_name(l_addr, name, flags=SN_NOCHECK):
     @param name - new name of address. If name == "", then delete old name
     @param flags - combination of SN_... constants
     """
+    print("CALLED SET NAME",l_addr,name,flags)
     with ghidra_bridge.GhidraBridge(namespace=globals()):
-        if flags == SN_NOCHECK:
+        if hex(flags) == SN_NOCHECK:
             currentProgram.listing.setComment(toAddr(l_addr), 1, name)
