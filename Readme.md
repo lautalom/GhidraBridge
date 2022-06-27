@@ -15,20 +15,23 @@ The constraint is that plugins source code should not be changed. That implies w
 - Add your IDA plugin directory to Ghidra with the scripting manager. 
 - (Optional) For ease of usage, you may want to add a line `#@category plugin_name` to each plugin file. This will show a directory in the script manager with all the plugin files. Technically the source code would be changing, but it's also not a need, just visually convenient.
 - Add the layer files into the directory of the plugin. Make sure the plugin is supported, ask for support or add the support yourself!
-- Either run Ghidra Bridge from ghidras UI or use headless analysis.
+- Either start the Ghidra Bridge server from ghidras UI or use headless analysis.
 
 # Headless analysis example
 
-## First time
+## Server Init: First time
 So the first time ghidra imports a binary, it creates a project and saves some information about it. For details, you should check [this article](https://static.grumpycoder.net/pixel/support/analyzeHeadlessREADME.html#general). Run within GhidraRoot/support
 the command `./analyzeHeadless <project_location> <project_name> -import <target_binary> -scriptPath <ghidra_bridge_script_path> -postscript <ghidra_bridge_server.py_location>`
 
-## Every other time
+## Server Init: Every other time
 
 Add the overwrite flag, keep all the previous parameters.
 
 `./analyzeHeadless <project_location> <project_name> -import <target> -scriptPath <ghidra_bridge_script_path> -postscript <ghidra_bridge_server_location> -overwrite`
 
+## Plugin run
+
+run `python invoke.py`, then input the plugin name as it will be imported and run programmatically.
 # Supported Plugins
 
 - [Findcrypt](https://github.com/polymorf/findcrypt-yara/blob/master/findcrypt3.py)
