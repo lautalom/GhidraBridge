@@ -1,9 +1,6 @@
-# ida_diskio wrapper
-# @lautalom
+# ida_diskio wrapper (findcrypt)
+# @author lautalom
 # @category layer
-# @keybinding
-# @menupath
-# @toolbar
 
 """ida_diskio wrapper"""
 

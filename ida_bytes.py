@@ -1,9 +1,6 @@
 # module for IDA Plugin SDK API wrapper: bytes
-# @lautalom
+# @author lautalom
 # @category layer
-# @keybinding
-# @menupath
-# @toolbar
 
 
 """module for IDA Plugin SDK API wrapper: bytes"""
