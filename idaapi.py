@@ -1,10 +1,8 @@
-"""idaapi wrapper"""
-
 # idaapi wrapper
 # @author lautalom
 # @category layer
 
-import ghidra_bridge
+
 from os import getcwd, path
 
 SN_NOCHECK = hex(00)  # Replace invalid chars with SUBSTCHAR
@@ -73,18 +71,17 @@ def set_name(l_addr, name, flags=SN_NOCHECK):
     @param flags - combination of SN_... constants
     comment on an address
     """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        if hex(flags) == SN_NOCHECK:
-            currentProgram.listing.setComment(toAddr(l_addr), 1, name)
+    if __name__ == '__main__' and hex(flags) == SN_NOCHECK:
+        currentProgram.listing.setComment(toAddr(l_addr), 1, name)
+
 
 # currently in ida kernwin
 class Form:
-    
+    """mock form as needed by syms2elf"""
     def __init__(self, form, controls):
         self.form = form
-        self.txtFile = self.txtfile(0, path.join(controls['txtFile'], 'symbols.txt'))
-        print("textfile: ", self.txtFile.value)
-        
+        self.txtFile = self.txtfile(0, path.join(controls["txtFile"], "symbols.elf"))
+
     class txtfile:
         def __init__(self, id, value):
             self.id = id
@@ -92,7 +89,7 @@ class Form:
 
     def GetControlValue(*args):
         return
-    
+
     def SetControlValue(file):
         return file
 
@@ -103,6 +100,7 @@ class Form:
         return getcwd()
 
     def Compile(self):
+        print("HI THERE")
         return True
 
     def Compiled(self):
@@ -110,15 +108,18 @@ class Form:
 
     def Execute(*args):
         return 1
-    
+
     def Free(self):
         return
 
 
 def get_file_type_name():
     """returns the format of an executable file"""
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
+    if __name__ == '__main__':
         return str(currentProgram.getExecutableFormat())
+    else:
+        print("WHOOPSIE")
+        return "ELF"
 
 
 def warning(*args):

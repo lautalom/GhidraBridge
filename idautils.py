@@ -1,17 +1,17 @@
-# idautils wrapper 
+# idautils wrapper
 # @author lautalom
 # @category layer
 
 """ IDA High level utility functions"""
-import ghidra_bridge
 
 def Segments():
-    """ returns a list of segments starting offsets """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        blocks = currentProgram.getMemory().getBlocks()
-        ans = [
-            i.getStart().getOffset() for i in blocks if i.getStart().getOffset() != 0]
-        return ans
+    """returns a list of segments starting offsets"""
+    blocks = currentProgram.getMemory().getBlocks()
+    ans = [
+        i.getStart().getOffset() for i in blocks if i.getStart().getOffset() != 0
+    ]
+    return ans
+
 
 def Functions(start=None, end=None):
     """
@@ -24,19 +24,21 @@ def Functions(start=None, end=None):
     in multiple segments will be reported multiple times, once in each segment
     as they are listed.
     """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        if start is None: start = currentProgram.minAddress
-        if end is None:   end = currentProgram.maxAddress
-    
+    if __name__ == '__main__':
+        if start is None:
+            start = currentProgram.minAddress
+        if end is None:
+            end = currentProgram.maxAddress
+        
         chunk = currentProgram.getFunctionManager().getFunctions(start, True)
         funcs = [f for f in chunk if f.getEntryPoint() < end]
         return funcs
 
+
 class FunWrapper:
     def __init__(self, f):
-        with ghidra_bridge.GhidraBridge(namespace=globals()):
-            self.start_ea = f.getEntryPoint().getOffset()
-            self.fsize = f.getBody().getNumAddresses()
+        self.start_ea = f.getEntryPoint().getOffset()
+        self.fsize = f.getBody().getNumAddresses()
 
     def size(self):
         return self.fsize

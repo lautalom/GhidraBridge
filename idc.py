@@ -5,7 +5,8 @@
 """idc wrapper"""
 
 from array import array
-import ghidra_bridge
+from ghidra.program.database.mem.MemoryBlockDB import getBytes
+from ghidra.program.flatapi import FlatProgramAPI
 
 SEGATTR_END = 8
 
@@ -16,9 +17,11 @@ def get_segm_attr(segea, attr):
     @param segea: any address within segment
     @param attr: segment attributes as per ida config, define by need.
     """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        if attr == SEGATTR_END:
-            return currentProgram.getMemory().getBlock(toAddr(segea)).getEnd().getOffset()
+    if attr == SEGATTR_END:
+        return (
+            currentProgram.getMemory().getBlock(FlatProgramAPI.toAddr(segea)).getEnd().getOffset()
+        )
+
 
 def GetString(address, length):
     """
@@ -26,33 +29,38 @@ def GetString(address, length):
     length: length of the string in bytes including  null terminator
     return: a bytes-filled str object.
     """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        res = b""
-        try:
-            res = getBytes(toAddr(address), length + 1)
-            res = res.tolist()
-            res = [i if i >= 0 else (256 + i) for i in res]
-            res = array("B", res).tobytes()
-        except Exception as ex:
-            print("GetString failed: ", str(ex))
-        finally:
-            return res
+    res = b""
+    try:
+        res = getBytes(FlatProgramAPI.toAddr(address), length + 1)
+        res = res.tolist()
+        res = [i if i >= 0 else (256 + i) for i in res]
+        res = array("B", res).tobytes()
+    except Exception as ex:
+        print("GetString failed: ", str(ex))
+    finally:
+        return res
+
 
 def get_segm_name(func):
     """
     @param func: function object
-    returns: name of function's segment or empty string in case of failure 
+    returns: name of function's segment or empty string in case of failure
     """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
+    if __name__ == 'main':
         res = ""
         try:
-            res = str(currentProgram.getMemory().getBlock(toAddr(func.getEntryPoint().getOffset())).getName())
-            if res == 'EXTERNAL': res = 'extern'
+            res = str(
+                currentProgram.getMemory()
+                .getBlock(toAddr(func.getEntryPoint().getOffset()))
+                .getName()
+            )
+            if res == "EXTERNAL":
+                res = "extern"
         except Exception as e:
-            print("Failed to get segment",str(e))
+            print("Failed to get segment", str(e))
         finally:
             return res
 
+
 def get_func_name(func):
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        return str(func.getName())
+    return func.getName()

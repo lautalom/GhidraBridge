@@ -2,8 +2,8 @@
 # @author lautalom
 # @category layer
 
-import ghidra_bridge
+import os
 
 def get_input_file_path():
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
+    if __name__ == '__main__':
         return currentProgram.getExecutablePath()
