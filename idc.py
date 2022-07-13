@@ -40,3 +40,29 @@ def GetString(address, length):
             print("GetString failed: ", str(ex))
         finally:
             return res
+
+
+
+def get_segm_name(func):
+    """
+    @param func: function object
+    returns: name of function's segment or empty string in case of failure
+    """
+    with ghidra_bridge.GhidraBridge(namespace=globals()):
+        res = ""
+        try:
+            res = str(
+                currentProgram.getMemory()
+                .getBlock(toAddr(func.getEntryPoint().getOffset()))
+                .getName()
+            )
+            if res == "EXTERNAL":
+                res = "extern"
+        except Exception as e:
+            print("Failed to get segment", str(e))
+        finally:
+            return res
+
+
+def get_func_name(func):
+    return func.getName()

@@ -12,5 +12,5 @@ with ghidra_bridge.GhidraBridge(namespace=globals()) as b:
     plugin = input("Plugin Name: ")
     module = importlib.import_module(plugin)
     module.PLUGIN_ENTRY().run(0)
-    b.remote_shutdown()
+    #b.remote_shutdown()
 
