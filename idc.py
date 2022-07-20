@@ -7,6 +7,7 @@
 from array import array
 from ghidra.program.database.mem.MemoryBlockDB import getBytes
 from ghidra.program.flatapi import FlatProgramAPI
+import cp
 
 SEGATTR_END = 8
 
@@ -19,7 +20,7 @@ def get_segm_attr(segea, attr):
     """
     if attr == SEGATTR_END:
         return (
-            currentProgram.getMemory().getBlock(FlatProgramAPI.toAddr(segea)).getEnd().getOffset()
+            cp.currentProgram.getMemory().getBlock(FlatProgramAPI.toAddr(segea)).getEnd().getOffset()
         )
 
 
@@ -46,20 +47,19 @@ def get_segm_name(func):
     @param func: function object
     returns: name of function's segment or empty string in case of failure
     """
-    if __name__ == 'main':
-        res = ""
-        try:
-            res = str(
-                currentProgram.getMemory()
-                .getBlock(toAddr(func.getEntryPoint().getOffset()))
-                .getName()
-            )
-            if res == "EXTERNAL":
-                res = "extern"
-        except Exception as e:
-            print("Failed to get segment", str(e))
-        finally:
-            return res
+    res = ""
+    try:
+        res = str(
+            cp.currentProgram.getMemory()
+            .getBlock(FlatProgramAPI(cp.currentProgram).toAddr(func.getEntryPoint().getOffset()))
+            .getName()
+        )
+        if res == "EXTERNAL":
+            res = "extern"
+    except Exception as e:
+        print("Failed to get segment", str(e))
+    finally:
+        return res
 
 
 def get_func_name(func):

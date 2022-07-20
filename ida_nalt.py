@@ -2,8 +2,7 @@
 # @author lautalom
 # @category layer
 
-import os
+import cp
 
 def get_input_file_path():
-    if __name__ == '__main__':
-        return currentProgram.getExecutablePath()
+    return cp.currentProgram.getExecutablePath()
