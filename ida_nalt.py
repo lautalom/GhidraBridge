@@ -2,8 +2,7 @@
 # @author lautalom
 # @category layer
 
-import ghidra_bridge
+import cp
 
 def get_input_file_path():
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        return currentProgram.getExecutablePath()
+    return cp.currentProgram.getExecutablePath()

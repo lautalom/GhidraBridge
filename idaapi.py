@@ -1,15 +1,10 @@
-
-"""idaapi wrapper"""
-
 # idaapi wrapper
-# @lautalom
+# @author lautalom
 # @category layer
-# @keybinding
-# @menupath
-# @toolbar
 
-import ghidra_bridge
+
 from os import getcwd, path
+import cp
 
 SN_NOCHECK = hex(00)  # Replace invalid chars with SUBSTCHAR
 BWN_DISASM = 0
@@ -71,14 +66,14 @@ def attach_action_to_menu(*args):
 
 
 def set_name(l_addr, name, flags=SN_NOCHECK):
-    """Rename an address
+    """
     @param l_addr - linear address
     @param name - new name of address. If name == "", then delete old name
     @param flags - combination of SN_... constants
+    comment on an address
     """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        if hex(flags) == SN_NOCHECK:
-            currentProgram.listing.setComment(toAddr(l_addr), 1, name)
+    if hex(flags) == SN_NOCHECK:
+        cp.currentProgram.listing.setComment(toAddr(l_addr), 1, name)
 
 
 # currently in ida kernwin
@@ -106,7 +101,6 @@ class Form:
         return getcwd()
 
     def Compile(self):
-        print("HI THERE")
         return True
 
     def Compiled(self):
@@ -121,9 +115,7 @@ class Form:
 
 def get_file_type_name():
     """returns the format of an executable file"""
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        return str(currentProgram.getExecutableFormat())
-
+    return str(cp.currentProgram.getExecutableFormat())
 
 
 def warning(*args):

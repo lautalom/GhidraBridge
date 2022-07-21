@@ -1,21 +1,17 @@
-""" module for IDA High level utility functions"""
-# module for IDA High level utility functions
-# @lautalom
+# idautils wrapper
+# @author lautalom
 # @category layer
-# @keybinding
-# @menupath
-# @toolbar
 
-import ghidra_bridge
-
+""" IDA High level utility functions"""
+import cp
 
 def Segments():
-    """ returns a list of segments starting offsets """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        blocks = currentProgram.getMemory().getBlocks()
-        ans = [
-            i.getStart().getOffset() for i in blocks if i.getStart().getOffset() != 0]
-        return ans
+    """returns a list of segments starting offsets"""
+    blocks = cp.currentProgram.getMemory().getBlocks()
+    ans = [
+        i.getStart().getOffset() for i in blocks if i.getStart().getOffset() != 0
+    ]
+    return ans
 
 
 def Functions(start=None, end=None):
@@ -29,15 +25,14 @@ def Functions(start=None, end=None):
     in multiple segments will be reported multiple times, once in each segment
     as they are listed.
     """
-    with ghidra_bridge.GhidraBridge(namespace=globals()):
-        if start is None:
-            start = currentProgram.minAddress
-        if end is None:
-            end = currentProgram.maxAddress
-        
-        chunk = currentProgram.getFunctionManager().getFunctions(start, True)
-        funcs = [f for f in chunk if f.getEntryPoint() < end]
-        return funcs
+    if start is None:
+        start = cp.currentProgram.minAddress
+    if end is None:
+        end = cp.currentProgram.maxAddress
+    
+    chunk = cp.currentProgram.getFunctionManager().getFunctions(start, True)
+    funcs = [f for f in chunk if f.getEntryPoint() < end]
+    return funcs
 
 
 class FunWrapper:
