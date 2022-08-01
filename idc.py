@@ -20,7 +20,7 @@ def get_segm_attr(segea, attr):
     """
     if attr == SEGATTR_END:
         return (
-            cp.currentProgram.getMemory().getBlock(FlatProgramAPI.toAddr(segea)).getEnd().getOffset()
+            cp.currentProgram.getMemory().getBlock(FlatProgramAPI(cp.currentProgram).toAddr(segea)).getEnd().getOffset()
         )
 
 
@@ -32,8 +32,8 @@ def GetString(address, length):
     """
     res = b""
     try:
-        res = getBytes(FlatProgramAPI.toAddr(address), length + 1)
-        res = res.tolist()
+        res = FlatProgramAPI(cp.currentProgram).getBytes(FlatProgramAPI(cp.currentProgram).toAddr(start), length + 1)
+        res = list(res)
         res = [i if i >= 0 else (256 + i) for i in res]
         res = array("B", res).tobytes()
     except Exception as ex:

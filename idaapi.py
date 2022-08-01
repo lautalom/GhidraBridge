@@ -5,6 +5,7 @@
 
 from os import getcwd, path
 import cp
+from ghidra.program.flatapi import FlatProgramAPI
 
 SN_NOCHECK = hex(00)  # Replace invalid chars with SUBSTCHAR
 BWN_DISASM = 0
@@ -52,18 +53,16 @@ class plugin_t:
 
 def register_action(*args):
     """unused"""
-    print("called register_action", args)
+    return
 
 
 def unregister_action(*args):
     """unused"""
-    print("Called unregister_action:", args)
-
+    return
 
 def attach_action_to_menu(*args):
     """unused"""
-    print("Called attach_action_to_menu:", args)
-
+    return
 
 def set_name(l_addr, name, flags=SN_NOCHECK):
     """
@@ -73,7 +72,7 @@ def set_name(l_addr, name, flags=SN_NOCHECK):
     comment on an address
     """
     if hex(flags) == SN_NOCHECK:
-        cp.currentProgram.listing.setComment(toAddr(l_addr), 1, name)
+        cp.currentProgram.listing.setComment(FlatProgramAPI(cp.currentProgram).toAddr(l_addr), 1, name)
 
 
 # currently in ida kernwin
