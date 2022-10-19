@@ -1,6 +1,6 @@
 # ida_diskio wrapper (findcrypt)
 # @author lautalom
-# @category layer
+# @category GCL
 
 """ida_diskio wrapper"""
 

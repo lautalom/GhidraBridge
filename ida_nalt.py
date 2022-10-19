@@ -1,6 +1,6 @@
 # ida_nalt wrapper (syms2elf)
 # @author lautalom
-# @category layer
+# @category GCL
 
 import cp
 

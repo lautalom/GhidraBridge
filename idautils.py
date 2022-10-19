@@ -1,6 +1,6 @@
 # idautils wrapper
 # @author lautalom
-# @category layer
+# @category GCL
 
 """ IDA High level utility functions"""
 import cp

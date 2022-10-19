@@ -1,6 +1,6 @@
 # idaapi wrapper
 # @author lautalom
-# @category layer
+# @category GCL
 
 
 from os import getcwd, path

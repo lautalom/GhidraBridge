@@ -1,6 +1,5 @@
 # idc wrapper
-# @author lautalom
-# @category layer
+# @category GCL
 
 """idc wrapper"""
 

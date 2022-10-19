@@ -1,5 +1,5 @@
 # @author lautalom
-# @category layer
+# @category GCL
 
 if __name__=='__main__':
     import importlib.util

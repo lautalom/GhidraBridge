@@ -1,6 +1,6 @@
 # module for IDA Plugin SDK API wrapper: bytes
 # @author lautalom
-# @category layer
+# @category GCL
 
 
 """module for IDA Plugin SDK API wrapper: bytes"""
