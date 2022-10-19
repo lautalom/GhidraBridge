@@ -4,9 +4,10 @@
 
 
 from os import getcwd, path
+from ghidra.program.flatapi import FlatProgramAPI
 import cp
 
-SN_NOCHECK = hex(00)  # Replace invalid chars with SUBSTCHAR
+SN_NOCHECK = 0  # Replace invalid chars with SUBSTCHAR
 BWN_DISASM = 0
 AST_ENABLE_FOR_WIDGET = 2
 AST_DISABLE_FOR_WIDGET = 3
@@ -22,10 +23,9 @@ def action_desc_t(*args):
 
 
 class action_handler_t:
-    """unused"""
 
     def __init__(self):
-        return
+        self.__name__ = self.__class__.__name__
 
 
 class Choose:
@@ -39,7 +39,8 @@ class Choose:
 
     def Show(self):
         """print results of search"""
-        print(self.items)
+        for item in self.items:
+            print(item)
         return True
 
 
@@ -52,28 +53,30 @@ class plugin_t:
 
 def register_action(*args):
     """unused"""
-    print("called register_action", args)
+    pass
 
 
 def unregister_action(*args):
     """unused"""
-    print("Called unregister_action:", args)
+    pass
 
 
 def attach_action_to_menu(*args):
     """unused"""
-    print("Called attach_action_to_menu:", args)
+    pass
 
 
-def set_name(l_addr, name, flags=SN_NOCHECK):
+def set_name(l_addr, comment, flags=SN_NOCHECK):
     """
     @param l_addr - linear address
     @param name - new name of address. If name == "", then delete old name
     @param flags - combination of SN_... constants
     comment on an address
     """
-    if hex(flags) == SN_NOCHECK:
-        cp.currentProgram.listing.setComment(toAddr(l_addr), 1, name)
+    fcp = FlatProgramAPI(cp.currentProgram)
+    if flags == SN_NOCHECK:
+        # Precomment
+        cp.currentProgram.listing.setComment(fcp.toAddr(l_addr), 1, comment)
 
 
 # currently in ida kernwin

@@ -5,7 +5,7 @@
 """idc wrapper"""
 
 from array import array
-from ghidra.program.database.mem.MemoryBlockDB import getBytes
+#from ghidra.program.database.mem.MemoryBlockDB import getBytes
 from ghidra.program.flatapi import FlatProgramAPI
 import cp
 
@@ -20,19 +20,21 @@ def get_segm_attr(segea, attr):
     """
     if attr == SEGATTR_END:
         return (
-            cp.currentProgram.getMemory().getBlock(FlatProgramAPI.toAddr(segea)).getEnd().getOffset()
+            cp.currentProgram.getMemory().getBlock(FlatProgramAPI(cp.currentProgram).toAddr(segea)).getEnd().getOffset()
         )
 
 
 def GetString(address, length):
     """
+    was ported to ida_bytes get_strlit_contents according to IDA
     address: linear address of the string
     length: length of the string in bytes including  null terminator
     return: a bytes-filled str object.
     """
     res = b""
+    fcp = FlatProgramAPI(cp.currentProgram)
     try:
-        res = getBytes(FlatProgramAPI.toAddr(address), length + 1)
+        res = fcp.getBytes(fcp.toAddr(address), length + 1)
         res = res.tolist()
         res = [i if i >= 0 else (256 + i) for i in res]
         res = array("B", res).tobytes()
