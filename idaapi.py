@@ -45,11 +45,10 @@ class Choose:
 
 
 class plugin_t:
-    """unused"""
-
+    """Mock class"""
+    
     def __init__(self):
-        self.init()
-
+        self.user_directory = ""
 
 def register_action(*args):
     """unused"""

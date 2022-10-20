@@ -1,7 +1,7 @@
 
 # Description
 
-This is a work in progress to integrate FLOSS plugins into Ghidra. 
+This is a work in progress to integrate FLOSS plugins to Ghidra. Tested with Ghidra 10.1
 
 The constraint is that plugins source code should not be modified. 
 
