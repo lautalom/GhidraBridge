@@ -1,5 +1,4 @@
 # idaapi wrapper
-# @author lautalom
 # @category GCL
 
 

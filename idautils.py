@@ -1,5 +1,4 @@
 # idautils wrapper
-# @author lautalom
 # @category GCL
 
 """ IDA High level utility functions"""
