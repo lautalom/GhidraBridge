@@ -1,12 +1,10 @@
 # module for IDA Plugin SDK API wrapper: bytes
-# @author lautalom
 # @category GCL
 
 
 """module for IDA Plugin SDK API wrapper: bytes"""
 
 from array import array
-#from ghidra.program.database.mem.MemoryBlockDB import getBytes
 from ghidra.program.flatapi import FlatProgramAPI
 from ghidra.program.model.mem import MemoryAccessException
 import cp

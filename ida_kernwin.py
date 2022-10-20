@@ -1,6 +1,5 @@
-# ida_kernwin wrapper (syms2elf)
-# @author lautalom
+# ida_kernwin wrapper
 # @category GCL
 
 def ask_form(*args):
-    return askYesNo("Continue?", args[0])
+    pass

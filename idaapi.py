@@ -18,7 +18,6 @@ SETMENU_APP = 1
 
 
 def action_desc_t(*args):
-    """unused"""
     return args[0]
 
 
@@ -29,7 +28,6 @@ class action_handler_t:
 
 
 class Choose:
-    """unused"""
 
     CHCOL_HEX = 0
     CHCOL_PLAIN = 0
@@ -51,17 +49,14 @@ class plugin_t:
         self.user_directory = ""
 
 def register_action(*args):
-    """unused"""
     pass
 
 
 def unregister_action(*args):
-    """unused"""
     pass
 
 
 def attach_action_to_menu(*args):
-    """unused"""
     pass
 
 
@@ -80,7 +75,7 @@ def set_name(l_addr, comment, flags=SN_NOCHECK):
 
 # currently in ida kernwin
 class Form:
-    """mock form as needed by syms2elf"""
+    """mock form"""
     def __init__(self, form, controls):
         self.form = form
         self.txtFile = self.txtfile(0, path.join(controls["txtFile"], "symbols.elf"))
@@ -112,7 +107,7 @@ class Form:
         return 1
 
     def Free(self):
-        return
+        pass
 
 
 def get_file_type_name():
@@ -121,5 +116,4 @@ def get_file_type_name():
 
 
 def warning(*args):
-    """defined only for sake of completeness with syms2elf"""
-    print(*args)
+    pass
