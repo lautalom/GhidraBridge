@@ -3,10 +3,12 @@
 
 
 from os import getcwd, path
+import cp as cp
+import ida_nalt 
+import ida_kernwin
 from ghidra.program.flatapi import FlatProgramAPI
-import cp
 
-SN_NOCHECK = 0  # Replace invalid chars with SUBSTCHAR
+SN_NOCHECK = hex(00)
 BWN_DISASM = 0
 AST_ENABLE_FOR_WIDGET = 2
 AST_DISABLE_FOR_WIDGET = 3
@@ -14,6 +16,14 @@ PLUGIN_KEEP = 2
 PLUGIN_UNL = 8
 PLUGIN_OK = 1
 SETMENU_APP = 1
+
+# uefi re tool
+PLUGIN_MOD = 1
+PLUGIN_PROC = 64
+PLUGIN_FIX = 128
+BADADDR = hex(4294967295)
+
+action_desc_t = ida_kernwin.action_desc_t()
 
 
 def action_desc_t(*args):
@@ -116,3 +126,9 @@ def get_file_type_name():
 
 def warning(*args):
     pass
+
+get_input_file_path = ida_nalt.get_input_file_path
+
+ask_str = ida_kernwin.ask_str
+
+get_imagebase = ida_nalt.get_imagebase
