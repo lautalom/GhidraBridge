@@ -1,6 +1,6 @@
 
 
-from uefi_analyser import cp as cp
+import cp
 from ghidra.program.flatapi import FlatProgramAPI
 
 
