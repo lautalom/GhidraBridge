@@ -16,10 +16,11 @@ def get_segm_attr(segea, attr):
     @param segea: any address within segment
     @param attr: segment attributes as per ida config, define by need.
     """
+    minAddress = cp.currentProgram.minAddress.getOffset()
+    fcp = FlatProgramAPI(cp.currentProgram)
     if attr == SEGATTR_END:
-        return (
-            cp.currentProgram.getMemory().getBlock(FlatProgramAPI(cp.currentProgram).toAddr(segea)).getEnd().getOffset()
-        )
+        end =  cp.currentProgram.getMemory().getBlock(fcp.toAddr(segea+minAddress)).getEnd().getOffset()
+        return end - minAddress
 
 
 def GetString(address, length):

@@ -14,7 +14,9 @@ from idaapi import BADADDR
 def get_bytes(start, length):
     """Returns length bytes from start of a segment"""
     res = b""
-    start += cp.currentProgram.minAddress.getOffset()
+    # print(cp.currentProgram.minAddress)
+    minAddress = cp.currentProgram.minAddress.getOffset()
+    start += minAddress
     try:
         res = FlatProgramAPI(cp.currentProgram).getBytes(
             FlatProgramAPI(cp.currentProgram).toAddr(start), length + 1)
@@ -36,9 +38,9 @@ def next_head(ea, maxea):
     if maxea != cp.currentProgram.maxAddress.getOffset():
         # maxea might be a relative address (IDA address listing starts at 0)
         if codeUnit.getAddress().getOffset() > maxea+cp.currentProgram.minAddress.getOffset():
-            return int(BADADDR) 
+            return int(BADADDR)
     else:
-        #maxea is an absolute address
+        # maxea is an absolute address
         if codeUnit.getAddress().getOffset() > maxea:
             return int(BADADDR)
     reladdr = int(codeUnit.getAddressString(False, False), 16)
@@ -48,11 +50,14 @@ def next_head(ea, maxea):
 def del_items(ea, flags=0, nbytes=1, may_destroy=None):
     pass
 
+
 def create_struct(ea, length, tid, force=False):
     pass
 
+
 def get_wide_word(ea):
     return get_bytes(ea, 2)
+
 
 def get_wide_dword(ea):
     return get_bytes(ea, 4)
