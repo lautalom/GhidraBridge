@@ -2,7 +2,7 @@
 # @category GCL
 
 """ IDA High level utility functions"""
-import cp
+from uefi_analyser import cp
 
 def Segments():
     """returns a list of segments starting offsets"""
@@ -25,20 +25,24 @@ def Functions(start=None, end=None):
     in multiple segments will be reported multiple times, once in each segment
     as they are listed.
     """
+    minAddress = cp.currentProgram.minAddress.getOffset()
     if start is None:
         start = cp.currentProgram.minAddress
     if end is None:
         end = cp.currentProgram.maxAddress
     
     chunk = cp.currentProgram.getFunctionManager().getFunctions(start, True)
-    funcs = [f for f in chunk if f.getEntryPoint() < end]
+    funcs = [f.getEntryPoint().getOffset()-minAddress for f in chunk if f.getEntryPoint() < end]
     return funcs
 
 
 class FunWrapper:
     def __init__(self, f):
-        self.start_ea = f.getEntryPoint().getOffset()
-        self.fsize = f.getBody().getNumAddresses()
+        minAddress = cp.currentProgram.minAddress.getOffset()
+        listing = cp.currentProgram.getListing()
+        function = listing.getFunctionAt(minAddress+f)
+        self.start_ea = function.getEntryPoint().getOffset()
+        self.fsize = function.getBody().getNumAddresses()
 
     def size(self):
         return self.fsize
