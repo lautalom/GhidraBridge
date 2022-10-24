@@ -1,9 +1,6 @@
-# @category GCL
-
 """idc wrapper"""
 
 from array import array
-#from ghidra.program.database.mem.MemoryBlockDB import getBytes
 from ghidra.program.flatapi import FlatProgramAPI
 import cp
 
@@ -43,18 +40,16 @@ def GetString(address, length):
         return res
 
 
-def get_segm_name(func):
+def get_segm_name(ea):
     """
-    @param func: function object
+    @param ea: address
     returns: name of function's segment or empty string in case of failure
     """
     res = ""
+    minAddress = cp.currentProgram.minAddress.getOffset()
+    fcp = FlatProgramAPI(cp.currentProgram)
     try:
-        res = str(
-            cp.currentProgram.getMemory()
-            .getBlock(FlatProgramAPI(cp.currentProgram).toAddr(func.getEntryPoint().getOffset()))
-            .getName()
-        )
+        res = cp.currentProgram.getMemory().getBlock(fcp.toAddr(ea+minAddress)).getName()
         if res == "EXTERNAL":
             res = "extern"
     except Exception as e:
@@ -64,4 +59,8 @@ def get_segm_name(func):
 
 
 def get_func_name(func):
-    return func.getName()
+    minAddress = cp.currentProgram.minAddress.getOffset()
+    fcp = FlatProgramAPI(cp.currentProgram)
+    listing = cp.currentProgram.getListing()
+    function = listing.getFunctionAt(fcp.toAddr(minAddress+func))
+    return function.getName()

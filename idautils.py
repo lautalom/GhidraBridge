@@ -1,8 +1,10 @@
 # idautils wrapper
+# idautils wrapper
 # @category GCL
 
 """ IDA High level utility functions"""
-from uefi_analyser import cp
+import cp
+from ghidra.program.flatapi import FlatProgramAPI
 
 def Segments():
     """returns a list of segments starting offsets"""
@@ -39,8 +41,9 @@ def Functions(start=None, end=None):
 class FunWrapper:
     def __init__(self, f):
         minAddress = cp.currentProgram.minAddress.getOffset()
+        fcp = FlatProgramAPI(cp.currentProgram)
         listing = cp.currentProgram.getListing()
-        function = listing.getFunctionAt(minAddress+f)
+        function = listing.getFunctionAt(fcp.toAddr(minAddress+f))
         self.start_ea = function.getEntryPoint().getOffset()
         self.fsize = function.getBody().getNumAddresses()
 
