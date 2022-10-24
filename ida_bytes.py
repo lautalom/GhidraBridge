@@ -6,8 +6,7 @@
 """module for IDA Plugin SDK API wrapper: bytes"""
 
 from array import array
-import uefi_analyser.cp as cp
-from ghidra.program.database.mem.MemoryBlockDB import getBytes
+from . import cp
 from ghidra.program.flatapi import FlatProgramAPI
 from idaapi import BADADDR
 
@@ -34,11 +33,14 @@ def next_head(ea, maxea):
     listing = cp.currentProgram.getListing()
     codeUnit = listing.getCodeUnitAfter(
         fcp.toAddr(cp.currentProgram.minAddress.getOffset()+ea))
-    if codeUnit is None:
-        return int(BADADDR,16)
-    elif codeUnit.getAddress().getOffset() > maxea:
+    if maxea != cp.currentProgram.maxAddress.getOffset():
+        # maxea might be a relative address (IDA address listing starts at 0)
+        if codeUnit.getAddress().getOffset() > maxea+cp.currentProgram.minAddress.getOffset():
+            return int(BADADDR) 
+    else:
         #maxea is an absolute address
-        return int(BADADDR, 16)
+        if codeUnit.getAddress().getOffset() > maxea:
+            return int(BADADDR)
     reladdr = int(codeUnit.getAddressString(False, False), 16)
     return reladdr - cp.currentProgram.minAddress.getOffset()
 
