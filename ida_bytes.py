@@ -6,7 +6,7 @@
 """module for IDA Plugin SDK API wrapper: bytes"""
 
 from array import array
-from . import cp
+import cp
 from ghidra.program.flatapi import FlatProgramAPI
 from idaapi import BADADDR
 
