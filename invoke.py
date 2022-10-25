@@ -1,11 +1,20 @@
-# @category GCL
+# @author lautalom
+# @category layer
+
 
 if __name__=='__main__':
-    import importlib.util
-    import cp
-    plugin = "findcrypt3"
-    module = importlib.import_module(plugin)
-    cp.currentProgram = currentProgram
-    module.PLUGIN_ENTRY().run(0)
-    module.p_initialized = False
-    print('Done')
+    try:
+        import importlib.util
+        import cp
+    except:
+        import sys
+        import os
+        sys.path.append(os.path.dirname(__file__))
+        print(sys.path)
+        import cp
+    finally:
+        plugin = "analyser" 
+        cp.currentProgram = currentProgram
+        module = importlib.import_module(plugin)
+        module.PLUGIN_ENTRY().run(0)
+        print("Done")
