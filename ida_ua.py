@@ -1,4 +1,5 @@
 
+# @category GCL
 
 from ghidra.program.flatapi import FlatProgramAPI
 from ghidra.program.model.lang import OperandType

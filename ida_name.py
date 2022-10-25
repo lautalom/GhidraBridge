@@ -1,4 +1,5 @@
 
+# @category GCL
 
 import cp
 from ghidra.program.flatapi import FlatProgramAPI

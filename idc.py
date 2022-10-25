@@ -1,3 +1,5 @@
+
+# @category GCL
 """idc wrapper"""
 
 from array import array

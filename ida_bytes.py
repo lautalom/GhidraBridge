@@ -1,6 +1,5 @@
 # module for IDA Plugin SDK API wrapper: bytes
-# @author lautalom
-# @category layer
+# @category GCL
 
 
 """module for IDA Plugin SDK API wrapper: bytes"""
@@ -14,7 +13,6 @@ from idaapi import BADADDR
 def get_bytes(start, length):
     """Returns length bytes from start of a segment"""
     res = b""
-    # print(cp.currentProgram.minAddress)
     minAddress = cp.currentProgram.minAddress.getOffset()
     start += minAddress
     try:
@@ -30,21 +28,20 @@ def get_bytes(start, length):
 
 def next_head(ea, maxea):
     """get the next code unit that starts at an address 
-    that is greater than the given address (ea)."""
+    that is greater than ea."""
     fcp = FlatProgramAPI(cp.currentProgram)
     listing = cp.currentProgram.getListing()
+    minAddress = cp.currentProgram.minAddress.getOffset()
     codeUnit = listing.getCodeUnitAfter(
-        fcp.toAddr(cp.currentProgram.minAddress.getOffset()+ea))
+        fcp.toAddr(minAddress+ea))
     if maxea != cp.currentProgram.maxAddress.getOffset():
-        # maxea might be a relative address (IDA address listing starts at 0)
         if codeUnit.getAddress().getOffset() > maxea+cp.currentProgram.minAddress.getOffset():
-            return int(BADADDR)
+            return int(BADADDR, 16)
     else:
-        # maxea is an absolute address
         if codeUnit.getAddress().getOffset() > maxea:
-            return int(BADADDR)
+            return int(BADADDR, 16)
     reladdr = int(codeUnit.getAddressString(False, False), 16)
-    return reladdr - cp.currentProgram.minAddress.getOffset()
+    return reladdr - minAddress
 
 
 def del_items(ea, flags=0, nbytes=1, may_destroy=None):
@@ -55,9 +52,20 @@ def create_struct(ea, length, tid, force=False):
     pass
 
 
+def get_wide_byte(ea):
+    return get_bytes(ea, 1)
+
+
 def get_wide_word(ea):
     return get_bytes(ea, 2)
 
 
 def get_wide_dword(ea):
     return get_bytes(ea, 4)
+
+
+def set_cmt(ea, comm, rptble):
+    fcp = FlatProgramAPI(cp.currentProgram)
+    listing = cp.currentProgram.getListing()
+    minAddress = cp.currentProgram.minAddress.getOffset()
+    listing.setComment(fcp.toAddr(ea+minAddress), 1, comm)

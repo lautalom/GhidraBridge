@@ -1,4 +1,5 @@
 
+# @category GCL
 class GraphViewer:
     UI_Hooks_Trampoline = None
     def __init__(self, title="", close_open=False):
