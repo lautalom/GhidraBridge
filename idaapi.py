@@ -8,7 +8,7 @@ import ida_nalt
 import ida_kernwin
 from ghidra.program.flatapi import FlatProgramAPI
 
-SN_NOCHECK = hex(00)
+SN_NOCHECK = 0
 BWN_DISASM = 0
 AST_ENABLE_FOR_WIDGET = 2
 AST_DISABLE_FOR_WIDGET = 3
@@ -87,9 +87,10 @@ def set_name(l_addr, comment, flags=SN_NOCHECK):
     comment on an address
     """
     fcp = FlatProgramAPI(cp.currentProgram)
+    minAddress = cp.currentProgram.minAddress.getOffset()
     if flags == SN_NOCHECK:
         # Precomment
-        cp.currentProgram.listing.setComment(fcp.toAddr(l_addr), 1, comment)
+        cp.currentProgram.listing.setComment(fcp.toAddr(l_addr+minAddress), 1, comment)
 
 
 # currently in ida kernwin
