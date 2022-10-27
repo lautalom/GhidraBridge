@@ -4,7 +4,7 @@
 
 from os import getcwd, path
 import cp as cp
-import ida_nalt 
+import ida_nalt
 import ida_kernwin
 from ghidra.program.flatapi import FlatProgramAPI
 
@@ -44,21 +44,28 @@ class Choose:
     CHCOL_HEX = 0
     CHCOL_PLAIN = 0
 
-    def __init__(*args, **kwargs):
-        return
+    def __init__(self, *args, **kwargs):
+        self.title = args[0]
+        self.res = dict()
+        for item in args[1]:
+            self.res[item[0]] = None
 
     def Show(self):
         """print results of search"""
+
         for item in self.items:
-            print(item)
+            for k, v in enumerate(item):
+                print(str(list(self.res.keys())[k])+':',v,'| ', end='')
+            print()
         return True
 
 
 class plugin_t:
     """Mock class"""
-    
+
     def __init__(self):
         self.user_directory = ""
+
 
 def register_action(*args):
     pass
@@ -88,9 +95,11 @@ def set_name(l_addr, comment, flags=SN_NOCHECK):
 # currently in ida kernwin
 class Form:
     """mock form"""
+
     def __init__(self, form, controls):
         self.form = form
-        self.txtFile = self.txtfile(0, path.join(controls["txtFile"], "symbols.elf"))
+        self.txtFile = self.txtfile(0, path.join(
+            controls["txtFile"], "symbols.elf"))
 
     class txtfile:
         def __init__(self, id, value):
@@ -129,4 +138,3 @@ def get_file_type_name():
 
 def warning(*args):
     pass
-
