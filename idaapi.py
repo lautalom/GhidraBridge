@@ -24,6 +24,9 @@ PLUGIN_FIX = 128
 BADADDR = hex(4294967295)
 
 action_desc_t = ida_kernwin.action_desc_t()
+get_input_file_path = ida_nalt.get_input_file_path
+ask_str = ida_kernwin.ask_str
+get_imagebase = ida_nalt.get_imagebase
 
 
 def action_desc_t(*args):
@@ -127,8 +130,3 @@ def get_file_type_name():
 def warning(*args):
     pass
 
-get_input_file_path = ida_nalt.get_input_file_path
-
-ask_str = ida_kernwin.ask_str
-
-get_imagebase = ida_nalt.get_imagebase

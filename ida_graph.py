@@ -5,26 +5,25 @@ class GraphViewer:
     def __init__(self, title="", close_open=False):
         self.title = title
         self.close_open = close_open
-        return
     def AddCommand(self,title, shortcut):
-        return
+        pass
     def AddEdge(self, src_node, dest_node):
-        return
+        pass
     def AddNode(self, obj):
-        return
+        pass
     def Clear(self):
-        return
+        pass
     def Close(self):
-        return
+        pass
     def Count(self):
-        return
+        pass
     def OnCommand(self, cmd_id):
-        return
+        pass
     def OnPopup(self, widget, popup_handle):
-        return
+        pass
     def OnRefresh(self):
-        return
+        pass
     def Select(self, node_id):
-        return
+        pass
     def Show(self):
-        return
+        pass

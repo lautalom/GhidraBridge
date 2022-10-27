@@ -5,7 +5,6 @@ from ghidra.program.flatapi import FlatProgramAPI
 from ghidra.program.model.lang import OperandType
 import cp
 
-# https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/x64-architecture?redirectedfrom=MSDN
 REGS = {'RAX': 0, 'EAX': 0, 'AX': 0,
         'RCX': 1, 'ECX': 1, 'CX': 1,
         'RDX': 2, 'EDX': 2, 'DX': 2,
@@ -53,7 +52,6 @@ def decode_insn(insn, ea):
     insn.ops = [i for i in range(codeUnit.getNumOperands())]
 
     for i in range(len(insn.ops)):
-        # length of operand > 0 means operand has to be an address
         op = operand()
         op.type = codeUnit.getOperandType(i)
         if op.type & OperandType.REGISTER:
