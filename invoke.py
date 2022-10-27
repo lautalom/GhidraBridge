@@ -8,7 +8,7 @@ if __name__ == '__main__':
         import os
         import cp
     except:
-        sys.path.append(os.path.join(os.path.dirname(__file__)))
+        sys.path.append(os.path.dirname(__file__))
         import cp
     finally:
         plugin = "findcrypt3"
