@@ -14,10 +14,10 @@ def get_bytes(start, length):
     """Returns length bytes from start of a segment"""
     res = b""
     minAddress = cp.currentProgram.minAddress.getOffset()
+    fcp = FlatProgramAPI(cp.currentProgram)
     start += minAddress
     try:
-        res = FlatProgramAPI(cp.currentProgram).getBytes(
-            FlatProgramAPI(cp.currentProgram).toAddr(start), length + 1)
+        res = fcp.getBytes(fcp.toAddr(start), length + 1)
         res = list(res)
         res = [i if i >= 0 else (256 + i) for i in res]
         res = array("B", res)
