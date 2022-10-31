@@ -9,9 +9,7 @@ def Segments():
     """returns a list of segments starting offsets"""
     blocks = cp.currentProgram.getMemory().getBlocks()
     minAddress = cp.currentProgram.minAddress.getOffset()
-    ans = [
-        i.getStart().getOffset()-minAddress for i in blocks if i.getStart().getOffset() != 0
-    ]
+    ans = [i.getStart().getOffset()-minAddress for i in blocks if i.isRead()]
     return ans
 
 
