@@ -108,16 +108,16 @@ class Form:
             self.value = value
 
     def GetControlValue(*args):
-        return
+        pass
 
     def SetControlValue(file):
-        return file
+        pass
 
     def FormChangeCb(cfunc):
-        return cfunc
+        pass
 
     def FileInput(**kwargs):
-        return getcwd()
+        pass
 
     def Compile(self):
         return True
@@ -126,7 +126,7 @@ class Form:
         return False
 
     def Execute(*args):
-        return 1
+        pass
 
     def Free(self):
         pass
