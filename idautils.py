@@ -41,8 +41,8 @@ class FunWrapper:
         fcp = FlatProgramAPI(cp.currentProgram)
         listing = cp.currentProgram.getListing()
         function = listing.getFunctionAt(fcp.toAddr(minAddress+f))
-        self.start_ea = function.getEntryPoint().getOffset()
-        self.fsize = function.getBody().getNumAddresses()
+        self.start_ea = function.getBody().getMinAddress().getOffset()
+        self.fsize = function.getBody().getFirstRange().length
 
     def size(self):
         return self.fsize
