@@ -117,7 +117,7 @@ class Form:
         pass
 
     def FileInput(**kwargs):
-        pass
+        return getcwd()
 
     def Compile(self):
         return True
@@ -126,7 +126,7 @@ class Form:
         return False
 
     def Execute(*args):
-        pass
+        return 1
 
     def Free(self):
         pass
