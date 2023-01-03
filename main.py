@@ -11,7 +11,7 @@ if __name__ == '__main__':
         sys.path.append(os.path.dirname(__file__))
         import cp
     finally:
-        plugin = "findcrypt3"
+        plugin = "uefi_analyser"
         cp.currentProgram = currentProgram
         path = os.path.dirname(__file__)+'/'+plugin+'.py'
         spec = importlib.util.spec_from_file_location(plugin,path)

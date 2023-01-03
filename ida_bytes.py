@@ -34,12 +34,21 @@ def next_head(ea, maxea):
     minAddress = cp.currentProgram.minAddress.getOffset()
     codeUnit = listing.getCodeUnitAfter(
         fcp.toAddr(minAddress+ea))
-    if maxea != cp.currentProgram.maxAddress.getOffset():
-        if codeUnit.getAddress().getOffset() > maxea+cp.currentProgram.minAddress.getOffset():
-            return int(BADADDR, 16)
-    else:
-        if codeUnit.getAddress().getOffset() > maxea:
-            return int(BADADDR, 16)
+    if codeUnit == None:
+        return int(BADADDR, 16)
+    reladdr = int(codeUnit.getAddressString(False, False), 16)
+    return reladdr - minAddress
+
+def prev_head(ea, minea):
+    """get the previous code unit that starts at an address 
+    that is less than ea."""
+    fcp = FlatProgramAPI(cp.currentProgram)
+    listing = cp.currentProgram.getListing()
+    minAddress = cp.currentProgram.minAddress.getOffset()
+    codeUnit = listing.getCodeUnitBefore(
+        fcp.toAddr(minAddress+ea))
+    if codeUnit == None:
+        return int(BADADDR, 16)
     reladdr = int(codeUnit.getAddressString(False, False), 16)
     return reladdr - minAddress
 

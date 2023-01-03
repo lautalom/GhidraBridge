@@ -36,8 +36,7 @@ class operand:
         reg = None
         phrase = None
         type = None
-
-
+    
 def decode_insn(insn, ea):
     """Fill insn according to the given ea
     @returns: length of instruction if successfull else 0
